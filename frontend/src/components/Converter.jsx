@@ -15,7 +15,7 @@ export function Converter() {
         setStatus('Converting..');
 
         try {
-            const response = await fetch('https://yt-to-mp3-ue35.onrender.com/convert', {
+            const response = await fetch('http://localhost:8000/convert', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url: url })
@@ -37,7 +37,7 @@ export function Converter() {
         }
         finally {
             setIsLoading(false)
-            setStatus('');
+            //setStatus('');
         }
 
 
@@ -46,10 +46,10 @@ export function Converter() {
 
 
     async function fetchVideoInfo(inputUrl) {
-        if (!inputUrl) return
+        if (!inputUrl || (!inputUrl.includes('youtube.com') && !inputUrl.includes('youtu.be'))) return
 
         try {
-            const response = await fetch(`https://yt-to-mp3-ue35.onrender.com/info?url=${encodeURIComponent(inputUrl)}`)
+            const response = await fetch(`http://localhost:8000/info?url=${encodeURIComponent(inputUrl)}`)
             const data = await response.json();
             setVideoTitle(data.title);
             setThumbnail(data.thumbnail);
@@ -62,19 +62,14 @@ export function Converter() {
 
 
 
-
-
-
-
-
     return (
         <>
-            <div className='conatiner'>
+            <div className='container'>
                 <div className='pg-content'>
 
                     <h1 className='heading'>YouTube to MP3 Converter</h1>
 
-                    <p className='subhead'> Paste a YouTube link and downlaod the MP3 audio</p>
+                    <p className='subhead'> Paste a YouTube link and download the MP3 audio</p>
 
                     <input type='text'
                         placeholder='Paste YouTube video link'

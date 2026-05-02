@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 import yt_dlp
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import FileResponse,JSONResponse
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
@@ -10,28 +10,20 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 import re
 
-cookies_content = os.environ.get("COOKIES_CONTENT")
-if cookies_content:
-    with open("cookies.txt", "w") as f:
-        f.write(cookies_content)
-    print(f"cookies file written , length : {len(cookies_content)}")
-else:
-    print("WARNING : COOKIES_CONTENT env veriable not found")
-
 
 limiter  =Limiter(key_func = get_remote_address, default_limits = ["5/minute"])
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:5173"],
     allow_methods=["*"],
     allow_headers=["*"]
 )
 
 
 app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, lambda request , exc : HTTPException( status_code = 429, detail="Too many request"))
+app.add_exception_handler(RateLimitExceeded, lambda request , exc : JSONResponse( status_code = 429, detail="Too many request"))
 app.add_middleware(SlowAPIMiddleware)
 
 
@@ -46,11 +38,7 @@ def greet():
 @app.get("/info")
 def get_detail(url : str):
     try:
-        with yt_dlp.YoutubeDL({
-            "cookiefile": "cookies.txt",
-            "quiet" : True,
-            "no_warnings" : True
-            }) as ydl : 
+        with yt_dlp.YoutubeDL({"quiet" : True}) as ydl : 
 
             info = ydl.extract_info(url, download=False)
             return {
@@ -65,14 +53,13 @@ def get_detail(url : str):
 def getlink(llink : vidURL, request : Request):
     
     try:
-        with yt_dlp.YoutubeDL({"cookiefile": "cookies.txt"}) as ydl:
+        with yt_dlp.YoutubeDL({"quiet" : True}) as ydl:
             info = ydl.extract_info(llink.url, download = False)
             clean_title = re.sub(r'[\\/*?:"<>|]', '', info['title'])
 
         options = {
-            "format" : "140",
+            "format" : "bestaudio/best",
             "outtmpl": os.path.join("downloads", f"{clean_title}.%(ext)s"),
-            "cookiefile": "cookies.txt",
             "postprocessors" : [{
             "key" : "FFmpegExtractAudio",
             "preferredcodec" : "mp3"

@@ -10,7 +10,10 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 import re
 
-
+cookies_content = os.environ.get("COOKIES_CONTENT")
+if cookies_content:
+    with open("cookies.txt", "w") as f:
+        f.write(cookies_content)
 
 
 
@@ -46,7 +49,7 @@ def get_detail(url : str):
             "quiet" : True,
             "no_warnings" : True
             }) as ydl : 
-            
+
             info = ydl.extract_info(url, download=False)
             return {
                 "title" : info.get("title"),

@@ -66,7 +66,7 @@ def getlink(llink : vidURL, request : Request):
             "key" : "FFmpegExtractAudio",
             "preferredcodec" : "mp3"
             }],
-            "ffmpeg_location": r"C:\Users\NEHA  REDDY\Downloads\ffmpegg\ffmpeg\bin"
+            
         }   
 
         with yt_dlp.YoutubeDL(options) as ydl:

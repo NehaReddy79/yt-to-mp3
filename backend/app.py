@@ -41,7 +41,12 @@ def greet():
 @app.get("/info")
 def get_detail(url : str):
     try:
-        with yt_dlp.YoutubeDL({}) as ydl : 
+        with yt_dlp.YoutubeDL({
+            "cookiefile": "cookies.txt",
+            "quiet" : True,
+            "no_warnings" : True
+            }) as ydl : 
+            
             info = ydl.extract_info(url, download=False)
             return {
                 "title" : info.get("title"),
@@ -55,13 +60,14 @@ def get_detail(url : str):
 def getlink(llink : vidURL, request : Request):
     
     try:
-        with yt_dlp.YoutubeDL({}) as ydl:
+        with yt_dlp.YoutubeDL({"cookiefile": "cookies.txt"}) as ydl:
             info = ydl.extract_info(llink.url, download = False)
             clean_title = re.sub(r'[\\/*?:"<>|]', '', info['title'])
 
         options = {
-            "format" : "bestaudio/best",
+            "format" : "140",
             "outtmpl": os.path.join("downloads", f"{clean_title}.%(ext)s"),
+            "cookiefile": "cookies.txt",
             "postprocessors" : [{
             "key" : "FFmpegExtractAudio",
             "preferredcodec" : "mp3"

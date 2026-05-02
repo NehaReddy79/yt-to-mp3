@@ -15,7 +15,7 @@ export function Converter() {
         setStatus('Converting..');
 
         try {
-            const response = await fetch('http://localhost:8000/convert', {
+            const response = await fetch('https://yt-to-mp3-ue35.onrender.com/convert', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url: url })
@@ -49,7 +49,7 @@ export function Converter() {
         if (!inputUrl) return
 
         try {
-            const response = await fetch(`http://localhost:8000/info?url=${encodeURIComponent(inputUrl)}`)
+            const response = await fetch(`https://yt-to-mp3-ue35.onrender.com/info?url=${encodeURIComponent(inputUrl)}`)
             const data = await response.json();
             setVideoTitle(data.title);
             setThumbnail(data.thumbnail);

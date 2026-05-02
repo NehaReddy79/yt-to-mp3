@@ -1,0 +1,160 @@
+body{
+    margin: 0;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background: linear-gradient(to bottom,   #141e30, #243b55);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.pg-content {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.heading {
+    margin: 0;
+    font-size: 24px;
+    text-align: center;
+}
+
+.subhead {
+    margin: 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+}
+
+.input-box {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input-box::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.con-button {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #0e2552;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.con-button:hover {
+    background: #0085cc;
+    box-shadow: 5px 5px 5px black  ;
+}
+
+.con-button:disabled {
+    background: rgba(255, 255, 255, 0.2);
+    cursor: not-allowed;
+}
+
+.status {
+    text-align: center;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.thumbnail {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.video-title {
+    text-align: center;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 40%;
+    background: #ff0000;
+    border-radius: 999px;
+    animation: slide 1s infinite ease-in-out;
+}
+
+@keyframes slide {
+    0% { transform: translateX(-100%) }
+    100% { transform: translateX(350%) }
+}
+
+.download-button {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    background: #1c65cc;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.download-button:hover {
+    background: #052c50;
+    transform: translateY(1px);
+    box-shadow: 5px 5px 5px black  ;
+}
+
+
+@media (max-width: 480px) {
+    .card {
+        padding: 24px 16px;
+        margin: 16px;
+    }
+
+    .heading {
+        font-size: 20px;
+    }
+
+    .con-button {
+        font-size: 14px;
+    }
+}

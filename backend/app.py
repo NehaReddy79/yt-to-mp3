@@ -14,7 +14,9 @@ cookies_content = os.environ.get("COOKIES_CONTENT")
 if cookies_content:
     with open("cookies.txt", "w") as f:
         f.write(cookies_content)
-
+    print(f"cookies file written , length : {len(cookies_content)}")
+else:
+    print("WARNING : COOKIES_CONTENT env veriable not found")
 
 
 limiter  =Limiter(key_func = get_remote_address, default_limits = ["5/minute"])
